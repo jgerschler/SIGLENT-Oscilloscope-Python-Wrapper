@@ -5,11 +5,11 @@ import visa, time
 class Oscilloscope(object):
     #def __init__(self):
 
-    def find_oscopes(self):
+    def enumerate_osc(self):
         rm = visa.ResourceManager()
         siglent_list = [instrument for instrument in rm.list_resources() if instrument.split('::')[1] == '0xF4EC']
-        for instrument in siglent_list:
-            print('Found a Siglent Oscilloscope. Serial:{}'.format(instrument.split('::')[3]))
+        for idx, instrument in enumerate(siglent_list):
+            print('ID:{0} (Oscilloscope Serial No. {1})'.format(str(idx),instrument.split('::')[3]))
                 
             
         
