@@ -52,12 +52,20 @@ class Oscilloscope(object):
         print(Oscilloscope.format_results(query_results))
 
     def set_vdiv(self, channel, value):
-        """accepted values: 2mV, 5mV, 10mV, 50mV, 100mV, 200mV, 500mV, 1V, 2V, 5V, 10V"""
+        """accepted values: 2mV, 5mV, 10mV, 50mV, 100mV, 200mV, 500mV, 1V, 2V, 5V, (also 10V if not CFL series)"""
         if value in ('2mV', '5mV', '10mV', '50mV', '100mV', '200mV', '500mV', '1V', '2V', '5V', '10V'):
             self.osc.write('C{0}:VDIV {1}'.format(str(channel), value.upper()))
         else:
             print("Invalid voltage division value.")
 
-    @staticmethod# fix this
+    def set_tdiv(self, channel, value):
+        """accepted values: 5ns, 10ns, 25ns, 50ns, 100ns, 250ns, 500ns, 1us, 2.5us, 5us, 10us, 25us, 50us, 
+        100us, 250us, 500us, 1ms, 2.5ms, 5ms, 10ms, 25ms, 50ms, 100ms, 250ms, 500ms, 1s, 2.5s, 5s, 10s, 25s, 50s"""# 1ns and 2.5ns can be added (applicable for certain models of oscilloscope)
+        if value in (5ns, 10ns, 25ns, 50ns, 100ns, 250ns, 500ns, 1us, 2.5us, 5us, 10us, 25us, 50us, 100us, 250us, 500us, 1ms, 2.5ms, 5ms, 10ms, 25ms, 50ms, 100ms, 250ms, 500ms, 1s, 2.5s, 5s, 10s, 25s, 50s):
+            self.osc.write('C{0}:TDIV {1}'.format(str(channel), value.upper()))
+        else:
+            print("Invalid time division value.")
+
+    @staticmethod
     def format_results(query_results):
         return query_results.split(',')[1]
