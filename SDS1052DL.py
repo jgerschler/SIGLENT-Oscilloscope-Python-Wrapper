@@ -51,6 +51,13 @@ class Oscilloscope(object):
         time.sleep(self.delay)
         print(Oscilloscope.format_results(query_results))
 
+    def set_vdiv(self, channel, value):
+        """accepted values: 2mV, 5mV, 10mV, 50mV, 100mV, 200mV, 500mV, 1V, 2V, 5V, 10V"""
+        if value in ('2mV', '5mV', '10mV', '50mV', '100mV', '200mV', '500mV', '1V', '2V', '5V', '10V'):
+            self.osc.write('C{0}:VDIV {1}'.format(str(channel), value.upper()))
+        else:
+            print("Invalid voltage division value.")
+
     @staticmethod# fix this
     def format_results(query_results):
         return query_results.split(',')[1]
