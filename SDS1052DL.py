@@ -3,6 +3,7 @@
 import visa, time
 
 class Oscilloscope(object):
+    delay = 0.01
     #def __init__(self):
 
     def connect(self, instrument_id=0):
@@ -14,7 +15,7 @@ class Oscilloscope(object):
                 print("ID:{0} (Oscilloscope Serial No. {1})".format(str(idx),instrument.split('::')[3]))
             print("")
             print("Connecting to oscilloscope (ID {}).".format(str(instrument_id)))
-            osc = self.rm.open_resource(siglent_list[instrument_id])
+            self.osc = self.rm.open_resource(siglent_list[instrument_id])
             print("")
             print("Connected.")
             return
@@ -25,3 +26,12 @@ class Oscilloscope(object):
     def disconnect(self):
         self.rm.close()
         
+    def measure_vpp(self, channel):
+        query_results = self.osc.query('C{}:PAVA? PKPK'.format(str(channel)))
+        time.sleep(Oscilloscope.delay)
+        print(query_results)
+        
+##    def measure_vpp(self, channel):
+##        query_results = self.osc.query('C{}:PAVA? PKPK'.format(str(channel)))
+##        time.sleep(Oscilloscope.delay)
+##        print(query_results)
