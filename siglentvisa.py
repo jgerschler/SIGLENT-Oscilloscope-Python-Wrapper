@@ -72,10 +72,10 @@ class Oscilloscope(object):
 
     def set_vdiv(self, channel, value):
         """Sets voltage division for specified channel.
-            Accepted values: 2mV, 5mV, 10mV, 50mV, 100mV, 200mV, 500mV, 1V, 2V, 5V,
+            Accepted values: 2mV, 5mV, 10mV, 20mV, 50mV, 100mV, 200mV, 500mV, 1V, 2V, 5V,
             (also 10V if not CFL series)"""
         
-        if value in ('2mV', '5mV', '10mV', '50mV', '100mV', '200mV', '500mV', '1V', '2V', '5V', '10V'):
+        if value in ('2mV', '5mV', '10mV', '20mV', '50mV', '100mV', '200mV', '500mV', '1V', '2V', '5V', '10V'):
             try:
                 self.osc.write('C{0}:VDIV {1}'.format(str(channel), value.upper()))
                 print("Success. Voltage division set to {0}.".format(value))
